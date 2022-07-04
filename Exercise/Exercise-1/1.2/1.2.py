@@ -30,6 +30,6 @@ plt.plot(x,ty,color="orange")#plotting Theory CDF
 
 plt.xlabel('$x$')
 plt.ylabel('$F_X(x)$')
-plt.legend(["Numerical", "Theortical"])
+plt.legend(["Numerical", "Theoretical"])
 #plt.savefig('../figs/uni_cdf.png')
 plt.show()
