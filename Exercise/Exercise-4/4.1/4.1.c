@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "source.h"
+#include "coeffs.h"
 int  main(void) //main function begins
 {
  
