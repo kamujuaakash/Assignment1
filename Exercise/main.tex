@@ -172,7 +172,7 @@ columns=fullflexible
 %\numberwithin{problem}{subsection}
 %\numberwithin{definition}{subsection}
 \makeatletter
-\@addtoreset{figure}{section}
+%\@addtoreset{figure}{section}
 \makeatother
 \let\StandardTheFigure\thefigure
 %\renewcommand{\thefigure}{\theproblem.\arabic{figure}}
@@ -188,7 +188,7 @@ columns=fullflexible
 %\@addtoreset{figure}{problem}
 %\makeatother
 \makeatletter
-\@addtoreset{table}{section}
+%\@addtoreset{table}{section}
 \makeatother
 \let\StandardTheFigure\thefigure
 \let\StandardTheTable\thetable
@@ -372,7 +372,14 @@ gcc exrand.c -lm
 \end{lstlisting}
 \item
 Load gau.dat in python and plot the empirical CDF of $X$ using the samples in gau.dat. What properties does a CDF have?\\
-\solution \\The CDF of $X$ is plotted in Fig. \ref{fig:2.2}\\
+\solution \\
+\begin{itemize}
+\item $F_X (x)=P(X \leq x) $
+\item $Q_X (x) = P(X > x)$
+\item $Q_X (x) =\frac{1}{\sqrt{2\pi}} \int_{x} ^{\infty} e^{-\frac{u^2}{2}} du$
+\item  $F_X (x) = 1 - Q_X (x)$ This can be used to calculate F (x).
+\end{itemize}
+The CDF of $X$ is plotted in Fig. \ref{fig:2.2}\\
 using the code below
 \begin{lstlisting}
 wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-2/2.2/2.2.py
@@ -522,7 +529,7 @@ wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-4/4
 \end{lstlisting}
 Download the above files and execute the following commands
 \begin{lstlisting}
-gcc 4.1.c
+gcc 4.1.c 
 ./a.out
 \end{lstlisting}
 \item Find the CDF of $T$.\\
