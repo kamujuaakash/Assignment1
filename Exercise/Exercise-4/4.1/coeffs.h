@@ -277,23 +277,23 @@ void sumofuni(char *tri,int len)
 {
 int i;
 double x,y;
-FILE *fp,*fp2,*destinyfile;
+FILE *fp,*fp2,*dfile;
 //get two uniform distributions 
 uniform("uni1.dat",len);
 uniform("uni2.dat",len);
 //open the two files
 fp = fopen("uni1.dat","r");
 fp2=fopen("uni2.dat","r");
-destinyfile=fopen(tri,"w");
+dfile=fopen(tri,"w");
 //Generate numbers
 while(fscanf(fp,"%lf",&x)!=EOF)
 {
 fscanf(fp2,"%lf",&y);
-fprintf(destinyfile,"%lf\n",(double)(x+y));
+fprintf(dfile,"%lf\n",(double)(x+y));
 }
 fclose(fp);
 fclose(fp2);
-fclose(destinyfile);
+fclose(dfile);
 remove("uni1.dat");
 remove("uni2.dat");
 }
