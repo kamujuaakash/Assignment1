@@ -421,6 +421,7 @@ python3 2.3.py
 \caption{The PDF of $X$}
 \label{fig:2.3}
 \end{figure}
+$$\text{Let }\mu \approx 0$$
 Some of the properties of the PDF:
 \begin{enumerate}
     \item Symmetric about $x=\mu$ in this case
@@ -452,21 +453,26 @@ repeat the above exercise theoretically.
         \boxed{F_X(x)=1}
     \end{align}
     \item Mean is given by
-    \begin{align}
+    \begin{align*}
         E(x)=\int_{-\infty}^{\infty}xp_X(x)dx\\
+        \int_{-\infty}^{\infty} \brak{x exp\brak{-\frac{x^2}{2}}dx}\\
+        \text{Since the above function is odd}\\
         \implies \boxed{E(x)=0}
-    \end{align}
+    \end{align*}
     \item Variance is given by
-    \begin{align}
+    \begin{align*}
         \text{var}\sbrak{U}&=E(U^2)-(E(U))^2\\
-E{x^2}&=\int_{-\infty}^{\infty}x^2p_X(x)dx \\
+E\brak{x^2}&=\int_{-\infty}^{\infty}x^2p_X(x)dx \\
 &=\int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}}x^2exp\brak{-\frac{x^2}{2}}dx \\
-&=\frac{1}{\sqrt{2\pi}}\brak{x\int x exp\brak{-\frac{x^2}{2}}dx}
-\\ &-\frac{1}{\sqrt{2\pi}}\int \int \brak{x exp\brak{-\frac{x^2}{2}}}dx. dx\\
-&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}exp\brak{-\frac{x^2}{2}}dx \\
+&=\frac{1}{\sqrt{2\pi}}\brak{x\int_{-\infty}^{\infty} x exp\brak{-\frac{x^2}{2}}dx}
+\\ &  -\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}\brak{ \int \brak{x exp\brak{-\frac{x^2}{2}}dx}. dx}\\
+\end{align*}
+    
+\begin{align*}
+&=\left[-x\frac{1}{\sqrt{2\pi}} exp{\frac{-x^2}{2}}\right]_{-\infty}^{\infty}+\\ &\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}exp\brak{-\frac{x^2}{2}}dx \\
 &=\frac{\sqrt{2\pi}}{\sqrt{2\pi}}\\&=1
         \implies\boxed{\text{var}\sbrak{U}=1}
-    \end{align}
+    \end{align*}
 \end{enumerate}
 \section{From Uniform to Other}
 \begin{enumerate}[label=\thesection.\arabic*,ref=\thesection.\theenumi]
