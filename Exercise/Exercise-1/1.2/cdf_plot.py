@@ -39,7 +39,7 @@ plt.plot(x.T,uni_cdf(x))
 plt.grid() #creating the grid
 plt.xlabel('$x$')
 plt.ylabel('$F_X(x)$')
-plt.legend(["Numerical","Theoritical"])
+plt.legend(["Numerical","Theoretical"])
 #if using termux
 plt.savefig('figs/uni_cdf.png')
 # plt.savefig('./figs/uni_cdf.eps')
