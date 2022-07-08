@@ -26,7 +26,7 @@ for i in range(0,30):
 uni_cdf=scipy.vectorize(cdf)	
 
 	
-plt.plot(x.T,err'bo')#plotting the CDF
+plt.plot(x.T,err,'bo')#plotting the CDF
 plt.plot(x.T,uni_cdf)
 plt.grid() #creating the grid
 plt.xlabel('$x$')
