@@ -456,7 +456,6 @@ repeat the above exercise theoretically.
     \begin{align*}
         E(x)=\int_{-\infty}^{\infty}xp_X(x)dx\\
         \int_{-\infty}^{\infty} \brak{x exp\brak{-\frac{x^2}{2}}dx}\\
-        \text{Since the above function is odd}\\
         \implies \boxed{E(x)=0}
     \end{align*}
     \item Variance is given by
@@ -488,10 +487,13 @@ and plot its CDF.\\
 Running the below code generates samples of V from file uni.dat(U).
 \begin{lstlisting}
 https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-3/3.1/3.1.py
+https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-3/3.1/3.1.c
 \end{lstlisting}
 Use the below command in the terminal to run the code:
 \begin{lstlisting}
 python3 3.1.py
+gcc 3.1.c
+./a.out
 \end{lstlisting}
 Now these samples are used to plot  by running the below code,
  \begin{figure}[!h]
