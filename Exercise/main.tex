@@ -456,6 +456,7 @@ repeat the above exercise theoretically.
     \begin{align*}
         E(x)=\int_{-\infty}^{\infty}xp_X(x)dx\\
         \int_{-\infty}^{\infty} \brak{x exp\brak{-\frac{x^2}{2}}dx}\\
+        \text{Since the above function is odd}\\
         \implies \boxed{E(x)=0}
     \end{align*}
     \item Variance is given by
@@ -487,13 +488,10 @@ and plot its CDF.\\
 Running the below code generates samples of V from file uni.dat(U).
 \begin{lstlisting}
 https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-3/3.1/3.1.py
-https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-3/3.1/3.1.c
 \end{lstlisting}
 Use the below command in the terminal to run the code:
 \begin{lstlisting}
 python3 3.1.py
-gcc 3.1.c
-./a.out
 \end{lstlisting}
 Now these samples are used to plot  by running the below code,
  \begin{figure}[!h]
@@ -617,6 +615,411 @@ python3 4.3.py
             }$\\
     \end{enumerate}
 \item Verify your results through a plot \\
-\solution The Results are verified in the plots in Fig.\ref{fig:4.2}and Fig.\ref{fig:4.3}
+\solution The Results are verified in the plots in Fig.\ref{fig:4.2}and Fig.\ref{fig:4.3}\section{Maximum Likelihood}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+\item Generate equiprobable $X \in \cbrak{1,-1}$.\\	
+  \solution The generating X or bernoulie random variable $ \brak{X}$ is done by using uni.dat file. Download the below files
+    \begin{lstlisting}
+         wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/coeffs.h
+	 wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/5.1.c
+    \end{lstlisting}
+  Run the following command
+    \begin{lstlisting}
+	  gcc 5.5.c -lm
+	  ./a.out 
+    \end{lstlisting} 
+\item Generate
+$
+Y = AX+N,
+$
+	where $A = 5$ dB,  and $N \sim {0}{1}$.\\
+  \solution To generate distribution of Y random variable we will need previously generated bernoulie distribution and gaussian distribution.Download the below files
+    \begin{lstlisting}
+     wget  https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/coeffs.h
+     wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/5.2.c
+    \end{lstlisting}
+   Then run the following command,
+    \begin{lstlisting}
+     gcc 5.2.c -lm
+     ./a.out
+    \end{lstlisting}
+\item Plot $Y$ using a scatter plot.\\
+ \solution Download the below files
+    \begin{lstlisting}
+      wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/5.3.py
+    \end{lstlisting}
+   Then run the following command,
+    \begin{lstlisting}
+      python3 5.3.py
+    \end{lstlisting}	
+   	\begin{figure}
+   		\centering
+   		\includegraphics[width=\columnwidth]{5.3.png}
+   		\caption{The scatter plot of $Y$}
+   		\label{fig:Y_scatterplot}
+   	\end{figure}
+\item Guess how to estimate $X$ from $Y$.\\
+	\solution When $ Y > 0 $, we can more probably say that $X = 1$ as $X$ can take values from $\sbrak{-1,1}$.As $A$ increases the signal contribution will increase compared to noise.The scatter plot will not be intermixed as $A$ increases. So in this case, the scatter plot of $Y$ is seperated with decision boundary as $0$. So we can more probably say that,
+	  \begin{align}
+		  X &= \begin{cases}
+			  1 &, Y>0\\
+			 -1 &, Y<0 
+		       \end{cases}
+          \end{align}		       
+\item
+\label{ml-ch4_sim}
+Find
+\begin{equation}
+	P_{e|0} = \pr{\hat{X} = -1|X=1}
+\end{equation}
+and
+\begin{equation}
+	P_{e|1} = \pr{\hat{X} = 1|X=-1}
+\end{equation}
+%
+\solution The $\hat{X}$ is defined as,
+  \begin{align}
+      \hat{X} &= \begin{cases}
+	             1  &, Y > 0\\
+		     0  &, Y\leq 0
+		 \end{cases}
+  \end{align}
+ The error probability, when the actual signal is $X=1$ but transmitted as $\hat{X} = -1$ is,
+  \begin{align}
+	  P_{e|0} &= \pr{\hat{X} = -1|X=1}\\
+	          &= \pr{ Y \leq 0| X= 1}\\
+		  &= \pr{AX + N \leq 0 | X=1}\\
+		  &= \pr{ A + N \leq 0}\\
+		  &= \pr{N \leq -A}\\
+		  &= F_{N}\brak{-A}\\
+		  &= 1 - Q\brak{-A}\\
+		  &= 2.866515718791946e-07\label{eq:5-5-1}
+  \end{align}
+ And for the case when actual signal is $X=-1$ but transmitted as $\hat{X} = 1$ the error probability will be,
+  \begin{align}
+	  P_{e|1} &= \pr{\hat{X} = 1|X=-1}\\
+                  &= \pr{ Y > 0| X=-1}\\
+                  &= \pr{AX + N > 0 | X=1}\\
+                  &= \pr{ N-A > 0}\\
+                  &= \pr{N > A}\\
+		  &= 1 - F_{N}\brak{A}\\
+		  &= Q\brak{A}\\
+		  &= 2.866515719235352e-07\label{eq:5-5-2}
+  \end{align}
+The above calculations are coded in below python file,
+  \begin{lstlisting}
+    wget  https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/5.5.py
+  \end{lstlisting}
+  Run the following command
+  \begin{lstlisting}
+   python3 5.5.py
+  \end{lstlisting}
+\item Find $P_e$ assuming that $X$ has equiprobable symbols.\\
+ \solution Given that $X$ has equiprobable symbols so,
+   \begin{align}
+	   \pr{X = 1} &= \frac{1}{2}\\
+	   \pr{X=-1}  &= \frac{1}{2}
+   \end{align}
+   	From total probability theorem,
+   \begin{align}
+	   P_{e} &= \pr{e|1}\pr{X = -1} + \pr{e|0}\pr{X=1}\\
+		       &= \frac{1}{2}\brak{\pr{e|1} + \pr{e|0}}
+   \end{align}
+From $\eqref{eq:5-5-1}$,$\eqref{eq:5-5-2}$
+   \begin{align}
+	   \pr{e} &= 2.866515719013649e-07 
+   \end{align}
+\item
+Verify by plotting  the theoretical $P_e$ with respect to $A$ from 0 to 10 dB.\\
+ \solution
+   We know,
+     \begin{align}
+	     P_e  &= P_{e|1}\pr{X = -1} + P_{e|0}\pr{X=1} \\
+		  &= \frac{1}{2}\brak{ 1 - Q\brak{-A}} + \frac{1}{2}\brak{Q\brak{A}}
+     \end{align}
+    The above mentioned is the theoritical expression of $P_e$ w.r.t to $A$, it is plotted in rectangular axes and semi-log y axes using the below python codes,
+    \begin{lstlisting}
+     wget https://github.com/kamujuaakash/Assignment1/blob/main/Exercise/Exercise-5/5.7.py
+    \end{lstlisting}
+Then the following commands
+    \begin{lstlisting}
+      python3 5.7.py
+    \end{lstlisting}
+\begin{figure}
+  \centering
+  \includegraphics[width=\columnwidth]{5.7.png}
+  \caption{$P_e$ vs $A$}
+  \label{fig:P_e_A}
+ \end{figure}
+%
+\item Now, consider a threshold $\delta$  while estimating $X$ from $Y$. Find the value of $\delta$ that maximizes the theoretical $P_e$.\\
+ \solution
+     \begin{align}
+	     P_{e|0} &= \pr{\hat{X} = -1|X = 1}\\
+		     &= \pr{Y \leq \delta| X =1}\\
+                     &= \pr{AX + N \leq \delta | X =1}\\
+		     &= \pr{A + N \leq \delta}\\
+		     &= \pr{ N \leq \delta -A}\\
+		     &= F_{N}\brak{\delta-A}\\
+		     &= 1- Q\brak{\delta -A}
+     \end{align}
+     And,
+     \begin{align}
+	    P_{e|1} &= \pr{\hat{X} = 1|X = -1}\\
+	            &= \pr{Y > \delta| X =-1}\\
+                    &= \pr{AX + N > \delta | X =-1}\\
+                    &= \pr{N - A > \delta}\\ 
+                    &= \pr{ N > \delta + A}\\
+                    &= Q\brak{\delta + A}
+     \end{align}     
+  So we can write,
+     \begin{align}
+	     P_e &= P_{e|1}\pr{X = -1} + P_{e|0}\pr{X=1}\label{eq:5-8}\\
+	         &=\frac{1}{2}\brak{ 1 -Q\brak{\delta -A}  + Q\brak{\delta + A}}
+     \end{align}
+  Now to maximize the $P_e$, we will differentiate the expression w.r.t $\delta$ and equate it to $0$.
+     \begin{align}
+	     \frac{dP_e}{d\delta} = \frac{d}{d\delta}\brak{1 -Q\brak{\delta -A}  + Q\brak{\delta + A}} = 0\\
+	              \implies      \frac{d}{d\delta}\brak{F_{N}\brak{\delta - A} + 1 - F_{N}\brak{\delta +A}} &= 0\\
+	              \implies       p_{N}\brak{\delta -A} - p_{N}\brak{\delta + A} &= 0 \\
+				             \exp\brak{-\frac{\brak{\delta-A}^2}{2}} \nonumber  - \exp\brak{-\frac{\brak{\delta+A}^2}{2}}  &= 0
+     \end{align}
+     Since $e^x$ is one - one function, we can write,
+     \begin{align}
+	    - \frac{\brak{\delta - A}^2}{2} &= -\frac{\brak{\delta + A}^2}{2}\\
+		  \brak{\delta - A}^2 &= \brak{\delta + A}^2\\
+		  \delta &= 0 
+     \end{align}
+    Now we will find whether $P_e$ attains maxima or minima at $\delta = 0$
+     \begin{align}
+	     \frac{d^2P_e}{d\delta^{2}}|_{\delta = 0} &= 2A\exp\brak{\frac{-A^{2}}{2}} > 0
+     \end{align}
+\item Repeat the above exercise when
+	\begin{align}
+		p_{X}(0) = p
+	\end{align}
+ \solution Given that,
+         \begin{align}
+		 p_{X}\brak{0} = p
+         \end{align}
+	 So,
+	 \begin{align}
+           \pr{X = 1} = p_{X}\brak{0} = p\\
+           \pr{X = -1} &= 1 - p
+         \end{align}		 
+   From $\eqref{eq:5-8}$ we can write
+         \begin{align}
+             P_e &= P_{e|1}\pr{X = -1} + P_{e|0}\pr{X=1} \\
+		 &= \brak{1-p}Q\brak{\delta + A} + p\brak{1 - Q\brak{\delta - A}}\\
+		 &= \brak{1-p}Q\brak{\delta + A} + pQ\brak{A - \delta}
+         \end{align}
+   Now to maximize the $P_e$, we will differentiate the expression w.r.t $\delta$ and equate it to $0$.
+         \begin{align}
+          &\frac{d}{d\delta}P_e=p\frac{d}{d\delta} Q\brak{A -\delta}\nonumber \\
+          &+\brak{1-p}\frac{d}{d\delta} Q_N\brak{A+\delta}=0\\
+          &p\frac{d}{d\delta} F_N\brak{-A+\delta}\nonumber \\
+          &+\brak{1-p}\frac{d}{d\delta}\brak{1-F_N\brak{A+\delta}}=0\\
+          &\implies p\times p_N\brak{-A+\delta}\\
+          &-\brak{1-p}p_N\brak{A+\delta}=0
+         \end{align}     
+  From the PDF of gaussian, we will get
+         \begin{align}
+		 \delta &= \frac{\ln\brak{\frac{1}{p} - 1}}{2A}
+         \end{align}
+\item Repeat the above exercise using the MAP criterion.\\
+  \solution From the Bayes theorem, we can write
+       \begin{align}
+	          &\pr{X=1|Y=y}  \\
+	          &= \frac{\pr{X=1,Y=y}}{\pr{Y=y}}\\
+		      &= \frac{p\pr{N = y -A}}{pP_{Y|X}\brak{y|1} +\brak{1-p}P_{Y|X}\brak{y|-1}}\\
+		      &= \frac{p p_{N}\brak{y-A}}{pp_{N}\brak{y-A} + \brak{1-p}p_{N}\brak{y+A}}\\
+		      &= \frac{p}{p + \brak{1-p}\exp\brak{-2yA}}
+       \end{align}
+       And similarly for,
+       \begin{align}
+	          &\pr{X=-1|Y=y} \\
+	          &= \frac{\pr{X=-1,Y=y}}{\pr{Y=y}}\\
+		      &= \frac{\brak{1-p}\pr{N = y +A}}{pP_{Y|X}\brak{y|1} +\brak{1-p}P_{Y|X}\brak{y|-1}}\\
+		      &= \frac{\brak{1-p}p_{N}\brak{y+A}}{pp_{N}\brak{y-A} + \brak{1-p}p_{N}\brak{y+A}}\\
+              &= \frac{1-p}{1-p+ p\exp{2yA}}
+       \end{align}
+       Now for a particular y, to make $X = 1$ more likely than $X= -1$,
+        \begin{align}
+	   &\pr{X=1|Y=y} > \pr{X=-1|Y=y}\\
+	   &\frac{p}{p + \brak{1-p}\exp\brak{-2yA}} >\frac{1-p}{1-p+ p\exp\brak{2yA}}\\
+	   &p^2e^{2yA} > \brak{1-p}^{2}e^{-2yA}\\
+       &e^{2yA} >\frac{1-p}{p}\\
+	   &y > \frac{\ln{\brak{\frac{1-p}{p}}}}{2A}
+	\end{align}
+	And similarly for a particular y, to make $X=-1$ more likely than $X=1$, we need
+	 \begin{align}
+		 y < \frac{\ln{\brak{\frac{1-p}{p}}}}{2A}
+         \end{align}
+	 So to minimise the $P_e$ we need a threshold of
+	  \begin{align}
+		  \delta &= \frac{\ln{\brak{\frac{1-p}{p}}}}{2A}
+          \end{align}		   
+  \end{enumerate}
+\section{Gaussian to Other}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+\item
+%Let $X_1 \sim  \gauss{0}{1}$ and $X_2 \sim  \gauss{0}{1}$. Plot the CDF and PDF of
+%
+\begin{equation}
+V = X_1^2 + X_2^2
+\end{equation}
+ \solution Download the below files to generate the random variable $V$,
+	 \begin{lstlisting}
+          
+         \end{lstlisting}
+	Then run the following command,
+	 \begin{lstlisting}
+	  
+	 \end{lstlisting}
+	 For CDF download the below python file,
+	 \begin{lstlisting}
+	 
+	 \end{lstlisting}
+	 Then run the following command,
+	\begin{lstlisting}
+          
+        \end{lstlisting}
+       For PDF download the below pyhon file,
+	\begin{lstlisting}
+
+        \end{lstlisting}
+       Then run the follwing terminal in terminal,
+	\begin{lstlisting}
+	 
+	\end{lstlisting}
+    %\begin{figure}
+     %\centering
+     %\includegraphics[width=\columnwidth]{Q6/chi_square_cdf.png}
+     %\caption{The CDF of $V$}
+     %\label{fig:V_Cdf}
+    %\end{figure}
+     %\begin{figure}
+     %\centering
+     %\includegraphics[width=\columnwidth]{Q6/chi_squared_pdf.png}
+     %\caption{The PDF of $V$}
+     %\label{fig:V_PDF}
+    %\end{figure}
+%
+%
+%
+\item
+If
+%
+\begin{equation}
+F_{V}(x) =
+\begin{cases}
+1 - e^{-\alpha x} & x \geq 0 \\
+0 & x < 0,
+\end{cases}
+\end{equation}
+%
+find $\alpha$.\\
+%
+\item
+\label{ch3_raleigh_sim}
+Plot the CDF and PDf of
+%
+\begin{equation}
+A = \sqrt{V}
+\end{equation}
+%
+\end{enumerate}
+\section{Conditional Probability}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+\item
+\label{ch4_sim}
+Plot
+\begin{equation}
+P_e = \pr{\hat{X} = -1|X=1}
+\end{equation}
+%
+for
+\begin{equation}
+Y = AX+N,
+\end{equation}
+%where $A$ is Raleigh with $E\sbrak{A^2} = \gamma, N \sim \gauss{0}{1}, X \in \brak{-1,1}$ for $0 \le \gamma \le 10$ dB.
+%
+\item
+Assuming that $N$ is a constant, find an expression for $P_e$.  Call this $P_e(N)$
+%
+\item
+%
+\label{ch4_anal}
+For a function $g$,
+\begin{equation}
+E\sbrak{g(X)} = \int_{-\infty}^{\infty}g(x)p_{X}(x)\, dx
+\end{equation}
+%
+Find $P_e = E\sbrak{P_e(N)}$.
+%
+\item
+Plot $P_e$ in problems \ref{ch4_sim} and \ref{ch4_anal} on the same graph w.r.t $\gamma$.  Comment.
+		\end{enumerate}
+\section{Two Dimensions}
+Let
+\begin{equation}
+\mbf{y} = A\mbf{x} + \mbf{n},
+\end{equation}
+where
+\begin{align}
+x &\in \brak{\mbf{s}_0,\mbf{s}_1},
+\mbf{s}_0 =
+\begin{pmatrix}
+1
+\\
+0
+\end{pmatrix},
+\mbf{s}_1 =
+\begin{pmatrix}
+0
+\\
+1
+\end{pmatrix}
+\\
+\mbf{n} &=
+\begin{pmatrix}
+n_1
+\\
+n_2
+\end{pmatrix},
+n_1,n_2 \sim {0}{1}.
+\end{align}
+%
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+%%
+\item
+\label{ch5_fsk}
+Plot
+%
+\begin{equation}
+\mbf{y}|\mbf{s}_0 \text{ and } \mbf{y}|\mbf{s}_1
+\end{equation}
+%
+on the same graph using a scatter plot.
+%
+\item
+For the above problem, find a decision rule for detecting the symbols $\mbf{s}_0 $ and $\mbf{s}_1$.
+%
+\item
+Plot
+\begin{equation}
+P_e = \pr{\hat{\mbf{x}} = \mbf{s}_1|\mbf{x} = \mbf{s}_0}
+\end{equation}
+with respect to the SNR from 0 to 10 dB.
+%
+\item
+Obtain an expression for $P_e$. Verify this by comparing the theory and simulation plots on the same graph.
+%
+		\end{enumerate}
+
 \end{enumerate}
 \end{document}
