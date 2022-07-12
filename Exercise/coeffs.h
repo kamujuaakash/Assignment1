@@ -15,7 +15,7 @@ double meansquare(char *str);
 double variance(char *str);
 void sumofuni(char *tri,int len);
 void bernoulli(char *str, int len);
-void n_type(char *str1,char *str2 ,char *str3 , int len);
+void n_type(char *str1,char *str2 ,char *str3 ,int A, int len);
 //End function declaration
 
 
@@ -317,7 +317,7 @@ fprintf(fp,"%d\n",j);
 fclose(fp);
 
 }
-void n_type(char *str1,char *str2 ,char *str3 , int len)
+void n_type(char *str1,char *str2 ,char *str3 ,int A, int len)
 {
 int i,j;
 double temp;
@@ -331,17 +331,13 @@ double b ;
 fp3 = fopen(str3,"w");
 double k = 0 ;
 //Generate numbers
-while(fscanf(fp1,"%lf",&a)!= EOF && fscanf(fp2,"%lf",&b)!= EOF)
-{
-//going through lines
-i++ ,
-k = 5*a + b ;
-
-fprintf(fp3,"%lf\n",k);
+for(i = 0;i < len;i++){
+  fscanf(fp1,"%lf", &N);
+  fscanf(fp2,"%lf", &X);
+  fprintf(fp3,"%lf\n"A*X +N, );
 }
 fclose(fp1);
 fclose(fp2);
 fclose(fp3);
 }
-
 //End function for generating Gaussian random numbers
